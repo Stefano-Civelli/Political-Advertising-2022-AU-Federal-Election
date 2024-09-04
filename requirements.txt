@@ -5,3 +5,5 @@ pandas
 missingno
 langid
 emoji
+geopandas
+watermark

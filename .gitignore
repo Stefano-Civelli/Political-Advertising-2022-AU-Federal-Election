@@ -167,4 +167,6 @@ data/external/*.py
 *.zip
 
 
+.idea/
+
 .vscode/

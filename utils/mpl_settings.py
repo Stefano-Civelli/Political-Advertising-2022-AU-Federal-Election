@@ -9,13 +9,13 @@ def apply_settings():
     plt.rcParams['figure.figsize'] = (8, 6)
 
     # Increase the font size for better readability
-    plt.rcParams['font.size'] = 15
-    plt.rcParams['axes.labelsize'] = 17
-    plt.rcParams['axes.titlesize'] = 19
-    plt.rcParams['xtick.labelsize'] = 15
-    plt.rcParams['ytick.labelsize'] = 15
-    plt.rcParams['legend.fontsize'] = 15
-    plt.rcParams['figure.titlesize'] = 21
+    plt.rcParams['font.size'] = 18
+    plt.rcParams['axes.labelsize'] = 20
+    plt.rcParams['axes.titlesize'] = 22
+    plt.rcParams['xtick.labelsize'] = 18
+    plt.rcParams['ytick.labelsize'] = 18
+    plt.rcParams['legend.fontsize'] = 18
+    plt.rcParams['figure.titlesize'] = 24
 
     # Use a serif font for a more traditional scientific look
     plt.rcParams['font.family'] = 'serif'
@@ -75,3 +75,19 @@ def apply_settings_multiplot():
     # Add some spacing between subplots
     plt.rcParams['figure.subplot.hspace'] = 0.3
     plt.rcParams['figure.subplot.wspace'] = 0.3
+
+
+
+
+plot_settings = {'ytick.labelsize': 16,
+                        'xtick.labelsize': 16,
+                        'font.size': 22,
+                        'figure.figsize': (10, 5),
+                        'axes.titlesize': 22,
+                        'axes.labelsize': 18,
+                        'lines.linewidth': 2,
+                        'lines.markersize': 3,
+                        'legend.fontsize': 11,
+                        'mathtext.fontset': 'stix',
+                        'font.family': 'STIXGeneral'}
+plt.style.use(plot_settings)

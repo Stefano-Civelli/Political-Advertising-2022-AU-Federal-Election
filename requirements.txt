@@ -1,0 +1,5 @@
+nltk
+numpy
+matplotlib
+pandas
+missingno

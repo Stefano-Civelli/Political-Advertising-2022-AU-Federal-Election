@@ -165,7 +165,7 @@ cython_debug/
 *.shp
 data/external/*.py
 *.zip
-
+*.png
 
 .idea/
 

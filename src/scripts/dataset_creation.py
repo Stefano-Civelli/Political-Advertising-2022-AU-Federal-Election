@@ -4,6 +4,13 @@ This script creates the PAK and PAP datasets from the raw data.
 - PAP (Political Ads Party) dataset: contains all the ads that are related to political parties.
 - PAK (Political Ads Keywords) dataset: contains all the ads that contain political keywords.
 """
+import os
+import sys
+print(f'default sys.path: {sys.path}')
+PROJ_ROOT = os.path.abspath(os.path.join(os.pardir))
+PROJ_ROOT = os.path.abspath(os.path.join(PROJ_ROOT, os.pardir))
+sys.path.append(PROJ_ROOT)
+print(f'Project root: {PROJ_ROOT}')
 
 import argparse
 import nltk
@@ -11,12 +18,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 from nltk.stem import PorterStemmer
 import pandas as pd
-from classes.ads_reader import AdsReader
+from src.classes.ads_reader import AdsReader
 from utils.dataset_utilities import join_party_information, assign_macro_party, load_data, tokenize_text_multiword, \
     assign_macro_party_with_uap
 from data.external.keywords import keywords
-import os
-import sys
+
 from utils import mpl_settings, config
 import missingno as msno
 
@@ -204,21 +210,22 @@ def safe_tokenize_text(text):
 
 
 def main(args, keywords_pattern):
-    if not args.use_cache:
+    if args.use_cache and os.path.exists("../../data/interim/unique_ads.csv"):
+        print("Using cached data.")
+        pre_filtering_df = load_data("../../data/interim/unique_ads.csv")
+    else:
+        print("Loading data from scratch.")
         ads_reader = AdsReader(args.folder_path)
         ads_reader.load_ads_from_jsonl()
         ads_reader.convert_currency()
         ads_reader.ads_df = join_party_information(ads_reader.ads_df)
-        ads_reader.write_to_csv("../data/interim/unique_ads.csv")
-
+        ads_reader.write_to_csv("../../data/interim/unique_ads.csv")
         pre_filtering_df = ads_reader.ads_df
-    else:
-        pre_filtering_df = load_data("../data/interim/unique_ads.csv")
 
     print(f'ads entries before filtering: {pre_filtering_df.shape[0]}')
     filtered_df = filter_dataframe(pre_filtering_df)
     print(f'ads entries after filtering: {filtered_df.shape[0]}')
-    filtered_df.to_csv("../data/interim/filtered_ads.csv")
+    filtered_df.to_csv("../../data/interim/filtered_ads.csv")
 
     filtered_df['stemmed_body'] = filtered_df['custom_body'].apply(
         lambda x: apply_stemming(x, stemmer, nltk.word_tokenize))
@@ -255,12 +262,12 @@ def main(args, keywords_pattern):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--folder_path', type=str,
-                        default='../data/raw/2022_aus_election',
+                        default='../../data/raw/2022_AU_election_raw.zip',
                         help='Path to the folder containing the raw data.')
     parser.add_argument('--output_filename', type=str,
-                        default='../data/processed/paper/2022_aus_elections_mar_to_may_20_aug.csv',
+                        default='../../data/processed/2022_aus_elections_mar_to_may.csv',
                         help='Path to the output file.')
-    parser.add_argument('--use_cache', type=bool, default=True,
+    parser.add_argument('--use_cache', type=bool, default=True, 
                         help='Whether to use the cached data.')
     args = parser.parse_args()
 

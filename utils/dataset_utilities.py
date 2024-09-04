@@ -20,7 +20,7 @@ def join_party_information_deprecated(df):
         - page_name and/or
         - funding_entity
         """
-    party_info = pd.read_csv('../data/external/party_information.csv')
+    party_info = pd.read_csv('../../data/external/party_information.csv')
     # rename spend coplumn to party_spend
     party_info.rename(columns={'spend': 'party_spend'}, inplace=True)
 
@@ -51,7 +51,7 @@ def join_party_information(df):
     # IMPORTANT: page_name cannot be null
     assert df['page_name'].notnull().all(), "ERROR: page_name cannot be null"
 
-    party_info = pd.read_csv('../data/external/party_information.csv')
+    party_info = pd.read_csv('../../data/external/party_information.csv')
     party_info.rename(columns={'spend': 'party_spend'}, inplace=True)
     assert party_info['page_name'].nunique() == party_info.shape[0], "ERROR: page_name has duplicates"
 
@@ -328,7 +328,7 @@ def normalize_filenames(files):
         """
     normalized_files = {}
     for filename in files:
-        parts = filename.split('-')
+        parts = filename.split('/')[1].split('-')
         if parts[0] == 'FBads':
             date_str = parts[2]
             if len(date_str) == 7:

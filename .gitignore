@@ -164,3 +164,7 @@ cython_debug/
 *.csv
 *.shp
 data/external/*.py
+*.zip
+
+
+.vscode/

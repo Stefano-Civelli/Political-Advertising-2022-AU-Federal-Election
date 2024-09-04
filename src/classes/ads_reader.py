@@ -1,5 +1,6 @@
 import json
 import os
+import zipfile
 
 import langid
 
@@ -46,11 +47,11 @@ class AdsReader:
         keep_last (bool): Whether to keep only the last version of each ad.
     """
 
-    def __init__(self, directory='../data/raw'):
+    def __init__(self, zip_path='../../data/raw/2022_AU_election_raw.zip'):
         """
         If keep_last is True, only the last version of each ad is kept, overriding the older versions.
         """
-        self.directory = directory
+        self.zip_path = zip_path
         self.ads_df = None
         self.active_ads = set()
         self.ad_languages_dict = {}
@@ -59,40 +60,39 @@ class AdsReader:
         """Load all ads from JSONL files in the specified directory into a DataFrame."""
         ads_dict = {}
         # Sort files based on the date and time in the filename
-        files = os.listdir(self.directory)
+        
 
-        normalized_files = normalize_filenames(files)
+        with zipfile.ZipFile(self.zip_path, 'r') as zip_ref:
+            # Get list of files in the zip
+            files = [f for f in zip_ref.namelist()[1:]]
 
-        sorted_keys = sorted(normalized_files.keys(), key=lambda x: (x.split('-')[2], x.split('-')[3], x.split('-')[4]))
+            normalized_files = normalize_filenames(files)
+            sorted_keys = sorted(normalized_files.keys(), key=lambda x: (x.split('-')[2], x.split('-')[3], x.split('-')[4]))
 
-        for normalized_filename in tqdm(sorted_keys):
-            filename = normalized_files[normalized_filename]
-            file_path = os.path.join(self.directory, filename)
-            date_str = normalized_filename.split('-')[2]
-            file_date = datetime.strptime(date_str, '%Y%m%d')
-            current_active_ads = set()
-            with open(file_path, 'r') as file:
-                # loop on the ads in the file
-                for line in file:
-                    ad = json.loads(line)
+            for normalized_filename in tqdm(sorted_keys):
+                filename = normalized_files[normalized_filename]
+                date_str = normalized_filename.split('-')[2]
+                file_date = datetime.strptime(date_str, '%Y%m%d')
+                current_active_ads = set()
+                
+                with zip_ref.open(filename) as file:
+                    for line in file:
+                        ad = json.loads(line)
+                         # OPERATIONS ON THE AD ---------------------
+                        ad = self.process_ad(ad, unpack_dictionaries)
+                        ad_id = int(ad['id'])
+                        current_active_ads.add(ad_id)
+                        # END OF OPERATIONS ON THE AD ---------------
+                        ads_dict[ad_id] = ad
 
-                    # OPERATIONS ON THE AD ------------------------------------------------
-                    ad = self.process_ad(ad, unpack_dictionaries)
+                # Set ad_delivery_stop_time for ads not in the current file
+                stopped_ads = self.active_ads - current_active_ads
+                for ad_id in stopped_ads:
+                    if ad_id in ads_dict:
+                        ads_dict[ad_id]['ad_delivery_stop_time'] = file_date
 
-                    ad_id = int(ad['id'])
-                    current_active_ads.add(ad_id)
-                    # END OF OPERATIONS ON THE AD -----------------------------------------
-
-                    ads_dict[ad_id] = ad
-
-            # Set ad_delivery_stop_time for ads not in the current file
-            stopped_ads = self.active_ads - current_active_ads
-            for ad_id in stopped_ads:
-                if ad_id in ads_dict:
-                    ads_dict[ad_id]['ad_delivery_stop_time'] = file_date
-
-            # Update active_ads for the next iteration
-            self.active_ads = current_active_ads
+                # Update active_ads for the next iteration
+                self.active_ads = current_active_ads
 
         df = pd.DataFrame.from_dict(ads_dict, orient='index')
         self.convert_dates_to_datetime(df)
@@ -306,8 +306,8 @@ class AdsReader:
 
 
 def main():
-    folder_path = '../data/raw/2022_aus_election'
-    output_filename = '../data/processed/2022_aus_elections_mar_to_may_3_party.csv'
+    folder_path = '../../data/raw/2022_aus_election'
+    output_filename = '../../data/processed/2022_aus_elections_mar_to_may_3_party.csv'
 
     ads_reader = AdsReader(folder_path)
     ads_reader.load_ads_from_jsonl()
@@ -319,14 +319,14 @@ def main():
 
 
 def count_unique_ad_ids():
-    folder_path = '../data/raw/2022_aus_election'
+    folder_path = '../../data/raw/2022_aus_election'
     ads_reader = AdsReader(folder_path)
     n_unique, n_non_unique = ads_reader.count_unique_ad_ids()
     print(f"Number of unique ad IDs: {n_unique}")
     print(f"Number of non-unique ad IDs: {n_non_unique}")
 
 def check_for_reappeared_ads():
-    folder_path = '../data/raw/2022_aus_election'
+    folder_path = '../../data/raw/2022_aus_election'
     ads_reader = AdsReader(folder_path)
     ads_reader.assert_no_reappeared_ads()
 

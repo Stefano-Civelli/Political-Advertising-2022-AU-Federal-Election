@@ -77,8 +77,6 @@ def apply_settings_multiplot():
     plt.rcParams['figure.subplot.wspace'] = 0.3
 
 
-
-
 plot_settings = {'ytick.labelsize': 16,
                         'xtick.labelsize': 16,
                         'font.size': 22,

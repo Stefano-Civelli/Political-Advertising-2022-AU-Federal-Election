@@ -28,10 +28,10 @@ australian_regions = ['New South Wales', 'Victoria', 'Queensland', 'Western Aust
                       'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory'] # Jarvis Bay Territory is not included
 
 color_dict = {
-    'Labor': 'darkred',
+    'Labor': 'firebrick',
     'Liberal': 'blue',
-    'Independent': 'black',
-    'Green': 'green',
+    'Independent': 'darkturquoise',
+    'Green': 'olivedrab',
     'United Australia Party': 'darkorange',
 }
 

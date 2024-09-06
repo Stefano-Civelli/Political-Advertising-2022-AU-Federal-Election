@@ -35,6 +35,18 @@ color_dict = {
     'United Australia Party': 'darkorange',
 }
 
+state_color = {
+    'NSW': '#0099ff',
+    'VIC': '#0a2056',
+    'QLD': '#840f31',
+    'WA': '#fbe500',
+    'SA': '#d71f37',
+    'TAS': '#15684a',
+    'ACT': '#003399',
+    'NT': '#e45d26',
+}
+
+
 categorical_labels = ['page_name',
                       'publisher_platforms',
                       'languages',

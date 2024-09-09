@@ -30,9 +30,9 @@ australian_regions = ['New South Wales', 'Victoria', 'Queensland', 'Western Aust
 color_dict = {
     'Labor': 'firebrick',
     'Liberal': 'blue',
+    'United Australia Party': 'darkorange',
     'Independent': 'darkturquoise',
     'Green': 'olivedrab',
-    'United Australia Party': 'darkorange',
 }
 
 state_color = {

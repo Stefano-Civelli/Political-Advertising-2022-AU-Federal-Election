@@ -7,3 +7,4 @@ langid
 emoji
 geopandas
 watermark
+pymannkendall

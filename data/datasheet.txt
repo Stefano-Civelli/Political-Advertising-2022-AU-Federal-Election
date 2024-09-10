@@ -17,27 +17,70 @@ None.
 
 5. What do the instances that comprise the dataset represent (e.g.,
 documents, photos, people, countries)?
-Dataset consists of unique IDs of Facebook pages and groups in the dataset that have to be supplemented to CrowdTangle API with the appropriate keyword, timeframe, and state to replicate the dataset.
+Each row in the dataset represents a political ad that was posted on Facebook during the 2022 Australian Federal Election.
 
 6. How many instances are there in total (of each type, if appropriate)?
-There are 13946 unique Page IDs and 2823 unique Group IDs.
+There are 56,224 unique ads from 1,549 unique sponsors.
 
 7. Does the dataset contain all possible instances or is it a sample
 (not necessarily random) of instances from a larger set?
-It contains all the IDs of groups and pages used in the whole dataset.
+Yes, the dataset contains all the instances that were collected during the 2022 Australian Federal Election.
 
 8. What data does each instance consist of?
-No other information is supplemented in the shared dataset except the unique IDs. In order to obtain the rest of the metadata, researchers have to use CrowdTangle.
+Each entry in the dataset consists of the following columns:
+-ad_creation_time: The date and time when the ad was created.
+-ad_creative_body: The main text content of the ad.
+-ad_creative_link_caption: A brief caption for any link included in the ad.
+-ad_creative_link_title: The title of the link included in the ad.
+-ad_delivery_start_time: The date and time when the ad started being delivered/shown.
+-ad_snapshot_url: A URL to view a snapshot of the ad.
+-currency: The currency used for ad spending.
+-demographic_distribution: A breakdown of the ad's audience demographics.
+-funding_entity: The name of the entity that paid for the ad.
+-page_id: The unique identifier for the Facebook page that ran the ad.
+-page_name: The name of the Facebook page that ran the ad.
+-region_distribution: A breakdown of where geographically the ad was shown.
+-id: The unique identifier for the ad.
+-ad_creative_body_id: The unique identifier for the ad's creative body.
+-mean_spend: The average amount spent on the ad.
+-mean_impressions: The average number of times the ad was viewed.
+-cost_per_impression: The average cost per impression for the ad.
+-languages: The languages used in the ad.
+-impressions.lower_bound: The lower estimate of the number of impressions.
+-impressions.upper_bound: The upper estimate of the number of impressions.
+-spend.lower_bound: The lower estimate of the amount spent on the ad.
+-spend.upper_bound: The upper estimate of the amount spent on the ad.
+-ad_delivery_stop_time: The date and time when the ad stopped being delivered.
+-ad_creative_link_description: A description of the link included in the ad.
+-date_first_detected: The date when the ad was first detected by the system.
+-party: The political party associated with the ad, if applicable.
+-state: The Australian state/territory associated with the ad, if applicable.
+-electorate: The electoral district associated with the ad, if applicable.
+-full_name: The full name of the candidate/politician associated with the ad, if applicable.
+-house_or_senate: Indicates whether the ad is related to the House of Representatives or Senate.
+-organization_class: The type of organization that ran the ad (e.g. Party, Third Party Actor).
+-organization_subclass: A more specific classification of the organization (e.g. Interest Group).
+-electorate_from_page_name: The electorate extracted from the page name, if present.
+-party_from_page_name: The party extracted from the page name, if present.
+-state_from_page_name: The state extracted from the page name, if present.
+-state_from_electorate: The state derived from the electorate information.
+-custom_body: A cleaned version of the ad's main text content.
+-stemmed_body: The ad text with words reduced to their root form.
+-multiword_safe_lemmatized: The ad text lemmatized while preserving multiword expressions.
+-has_political_keywords: Whether the ad contains political keywords (true/false).
+-has_party: Whether the ad is associated with a political party (true/false).
+-macro_party: A simplified party categorization (e.g. Liberal, Labor).
+-macro_party_uap: A macro party categorization that includes the United Australia Party.
 
 9. Is there a label or target associated with each instance?
 No.
 
 10. Is any information missing from individual instances?
-No.
+Yes. Some columns may contain missing values, this is due to the nature of the data collection process using the Meta Ad Library API.
 
 11.  Are relationships between individual instances made explicit
 (e.g., users’ movie ratings, social network links)?
-There are no relationships between different pages/groups.
+There are no relationships between individual instances in the dataset.
 
 12. Are there recommended data splits (e.g., training, development/validation,
 testing)?
@@ -49,27 +92,27 @@ No, there are not.
 
 14. Is the dataset self-contained, or does it link to or otherwise rely on
 external resources (e.g., websites, tweets, other datasets)?
-Yes, each ID is a unique page/group that might not necessarily exist in the future. Therefore, such posts might not be obtainable. In addition, access to CrowdTangle API is restricted to academia only.
+Yes, the dataset is self-contained but it may contain links to external resources (e.g., ad snapshot URLs).
 
 15. Does the dataset contain data that might be considered confidential (e.g., data that is protected by legal privilege or by doctor–
 patient confidentiality, data that includes the content of individuals’ non-public communications)?
 No.
 
 16. Does the dataset contain data that, if viewed directly, might be offensive, insulting, threatening, or might otherwise cause anxiety?
-If the whole dataset is obtained, there might be some posts that cause anxiety if viewed directly.
+No.
 
 17. Does the dataset identify any subpopulations (e.g., by age, gender)? I
-No.
+Yes, the dataset contains information about the demographic distribution of the ads.
 
 18. Is it possible to identify individuals (i.e., one or more natural persons), either directly or indirectly (i.e., in combination with other
 data) from the dataset?
-If the whole dataset is extracted, it is possible to identify users who share posts in public groups. However, no identifiable information can be found in the CrowdTangle metadata.
+Yes, page names and funding entities may contain names of candidates that posted the ads.
 
 19. Does the dataset contain data that might be considered sensitive
 in any way (e.g., data that reveals race or ethnic origins, sexual orientations, religious beliefs, political opinions or union memberships, or locations; financial or health data; biometric or genetic
 data; forms of government identification, such as social security
-numbers; criminal history)? I
-Some of the examples provided might be visible from users' profiles. However, such information is not present in the metadata itself.
+numbers; criminal history)?
+No.
 
 20. How was the data associated with each instance acquired?
 The data is observable (it is coming from Facebook).
@@ -77,7 +120,7 @@ The data is observable (it is coming from Facebook).
 21. What mechanisms or procedures were used to collect the data
 (e.g., hardware apparatuses or sensors, manual human curation,
 software programs, software APIs)?
-CrowdTangle API was used to collect data.
+Meta Ad Library API was used to collect data. Additionally, a political stance expert manually labeled the ads with the political party, and other party-related information, associated with them.
 
 22. If the dataset is a sample from a larger set, what was the sampling
 strategy (e.g., deterministic, probabilistic with specific sampling
@@ -90,14 +133,14 @@ how much were crowdworkers paid)?
 Data was collected by paper authors. As stated above, no funding was provided for this project.
 
 24. Over what timeframe was the data collected?
-May 4 to June 30, 2022.
+March 1 to June 1, 2022.
 
 25. Were any ethical review processes conducted (e.g., by an institutional review board)?
-No.
+Yes.
 
 26. Did you collect the data from the individuals in question directly,
 or obtain it via third parties or other sources (e.g., websites)?
-We used CrowdTangle API to obtain individual posts.
+We used Meta Ad Library API to obtain individual ads.
 
 27. Did the individuals in question consent to the collection and use
 of their data?
@@ -110,25 +153,26 @@ No.
 29. Was any preprocessing/cleaning/labeling of the data done (e.g.,
 discretization or bucketing, tokenization, part-of-speech tagging,
 SIFT feature extraction, removal of instances, processing of missing values)?
-We prepared and trained a RoBERTa and XLNet models on the text data. Also, we manually labeled the perceived gender of the users who shared posts in public groups.
+No, we provide the raw data as it was collected. However, we did perform some preprocessing steps like cleaning the text, stemming, and lemmatization and provide the code for those.
+
 
 30. Was the “raw” data saved in addition to the preprocessed/cleaned/labeled
 data (e.g., to support unanticipated future uses)?
-No, as we only share Page Group unique IDs.
+Yes.
 
 31. Is the software that was used to preprocess/clean/label the data
 available?
-No.
+Yes.
 
 32. Has the dataset been used for any tasks already?
-We performed stance detection and statistical analysis described in the research paper.
+No.
 
 33. Is there a repository that links to any or all papers or systems that
 use the dataset?
-Here is the pre-print of the paper: https://arxiv.org/abs/2305.09889
+No.
 
 34. What (other) tasks could the dataset be used for?
-The data can be used for multiple tasks, like analyzing sentiments or emotions of users toward abortion at the state level, as well as improving current state-of-the-art stance detection models.
+The dataset can be used for various tasks related to political advertising analysis, political stance detection, and sentiment analysis.
 
 35. Is there anything about the composition of the dataset or the way
 it was collected and preprocessed/cleaned/labeled that might impact future uses?
@@ -143,7 +187,7 @@ No.
 
 38. How will the dataset will be distributed (e.g., tarball on website,
 API, GitHub)?
-The dataset will be shared on Zenodo and GitHub.
+The dataset will be shared on Zenodo and linked on GitHub.
 
 39. When will the dataset be distributed?
 The dataset is already published.
@@ -157,11 +201,11 @@ the data associated with the instances?
 No.
 
 42. Do any export controls or other regulatory restrictions apply to
-the dataset or to individual instances? I
+the dataset or to individual instances?
 No.
 
-43. Who will be supporting/hosting/maintaining the dataset
-paper authors.
+43. Who will be supporting/hosting/maintaining the dataset?
+Paper authors.
 
 44. How can the owner/curator/manager of the dataset be contacted?
 Via email, which can be found in the research paper.
@@ -184,4 +228,4 @@ Currently, there are no other versions of the dataset.
 
 49.If others want to extend/augment/build on/contribute to the
 dataset, is there a mechanism for them to do so?
-Other researchers can use the dataset for their research purposes.
+We provide the code for preprocessing and cleaning the data, so others can use it to extend or augment the dataset.

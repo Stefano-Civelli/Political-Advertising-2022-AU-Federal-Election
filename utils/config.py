@@ -46,6 +46,31 @@ state_color = {
     'NT': '#e45d26',
 }
 
+color_list = [
+    'firebrick',       
+    'blue',            
+    'darkorange',     
+    'darkturquoise',  
+    'olivedrab',     
+    '#0a2056',     
+    'slategray',    
+    '#fbe500', 
+    '#15684a',
+]
+
+
+# color_list = [
+# '#0099ff',
+#  '#0a2056',
+#    '#840f31',
+#  '#fbe500',
+#  '#d71f37',
+#    '#15684a',
+#    '#003399',
+#     '#e45d26',
+#     'black',
+# ]
+
 
 categorical_labels = ['page_name',
                       'publisher_platforms',

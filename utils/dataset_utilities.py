@@ -75,7 +75,6 @@ def join_party_information(df):
     df.loc[mask & df['funding_entity'].str.lower().str.contains('labor|labour', na=False), 'party'] = 'Labor'
     df.loc[mask & df['funding_entity'].str.lower().str.contains('liberal', na=False), 'party'] = 'Liberal'
 
-    # Apply the clean_parties function (assuming it exists)
     df = _clean_parties(df)
 
     assert length == df.shape[0], "ERROR: Rows have been added or removed during the join operation"

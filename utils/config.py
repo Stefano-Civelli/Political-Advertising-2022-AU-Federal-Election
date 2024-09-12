@@ -47,15 +47,15 @@ state_color = {
 }
 
 color_list = [
-    'firebrick',       
-    'blue',            
+    'mediumslateblue',   
+    'cornflowerblue',    
+    'peachpuff', 
+    'firebrick',   
     'darkorange',     
-    'darkturquoise',  
-    'olivedrab',     
-    '#0a2056',     
+    'paleturquoise',  
+    'mediumseagreen',     
+    'lightgrey',     
     'slategray',    
-    '#fbe500', 
-    '#15684a',
 ]
 
 

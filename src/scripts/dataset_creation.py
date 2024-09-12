@@ -21,7 +21,6 @@ import pandas as pd
 from src.classes.ads_reader import AdsReader
 from utils.dataset_utilities import join_party_information, assign_macro_party, load_data, tokenize_text_multiword, \
     assign_macro_party_with_uap
-from data.external.keywords import keywords
 
 from utils import mpl_settings, config
 import missingno as msno
@@ -34,6 +33,9 @@ print(f'default sys.path: {sys.path}')
 PROJ_ROOT = os.path.abspath(os.path.join(os.pardir))
 sys.path.append(PROJ_ROOT)
 print(f'Project root: {PROJ_ROOT}')
+
+keywords = pd.read_csv('../../data/external/keywords.csv', header=None)
+keywords = keywords[0].tolist()
 
 
 def print_datasets_stats(df, title):
@@ -152,13 +154,56 @@ def plot_datasets_sovapposition(df):
     ax2.set_xticks([])
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig('plots/dataset_sovrapposition.png')
 
     # Print percentages
     total = sum(counts)
     for label, count in zip(sorted_labels, sorted_counts):
         percentage = (count / total) * 100
         print(f"{label}: {count} ({percentage:.2f}%)")
+
+
+def create_keyword_dot_plot(keyword_counts, 
+                            figsize=(12, 6),
+                            dot_size=100,
+                            dot_color='royalblue',
+                            axis_label_size=18,
+                            tick_label_size=14,
+                            ylabel='Number of Ads',
+                            grid=False,
+                            xtick_offset=0.49):
+                            
+    def thousands_formatter(x, pos):
+        return f'{x/1000:.0f}K' if x >= 1000 else f'{x:.0f}'
+
+    
+    # Sort the keyword counts
+    sorted_keywords = sorted(keyword_counts.items(), key=lambda x: x[1], reverse=True)
+    keywords, counts = zip(*sorted_keywords)
+    
+    # Create the plot
+    plt.figure(figsize=figsize)
+    
+    # Use range for x-coordinates to align dots with labels
+    x = range(len(keywords))
+    plt.scatter(x, counts, s=dot_size, color=dot_color, linewidth=1.5)
+    
+    # Set x-ticks and labels
+    plt.xticks([i + xtick_offset for i in x], keywords, rotation=90, ha='right')
+    
+    # Set labels and title
+    plt.ylabel(ylabel, fontsize=axis_label_size)
+    
+    # Customize ticks
+    plt.tick_params(axis='both', which='major', labelsize=tick_label_size)
+    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(thousands_formatter))
+    
+    # Add grid if specified
+    plt.grid(grid, axis='y', linestyle='--', alpha=0.7)
+    plt.grid(grid, axis='x', alpha=0.7)
+    
+    plt.tight_layout()
+    plt.savefig('plots/keyword_count.png')
 
 
 def filter_dataframe(df):
@@ -252,9 +297,22 @@ def main(args, keywords_pattern):
 
     plot_datasets_sovapposition(filtered_df)
 
+    # Count occurrences of each keyword
+    keyword_counts = {keyword: filtered_df['stemmed_body'].str.contains(keyword, case=False, na=False).sum() for keyword in keywords}
+    # sort the dictionary by values
+    keyword_counts = dict(sorted(keyword_counts.items(), key=lambda item: item[1], reverse=True))
+    # merge the counters for labor and labour
+    keyword_counts['labor'] += keyword_counts['labour']
+    keyword_counts['labour'] = 0
+
+    # eliminate words with count 0
+    keyword_counts = {k: v for k, v in keyword_counts.items() if v > 0}
+    create_keyword_dot_plot(keyword_counts)
+
+
     msno.matrix(filtered_df)
     # Save the plot to a file
-    plt.savefig('missingno_plot.png')
+    plt.savefig('plots/missingno_plot.png')
 
 
 

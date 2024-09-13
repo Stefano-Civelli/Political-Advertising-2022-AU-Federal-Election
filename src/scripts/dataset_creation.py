@@ -93,7 +93,6 @@ def print_datasets_stats(df, title):
     print(confusion_matrix)
     print(f"\n{'-' * 50}\n")
 
-
 def plot_datasets_sovapposition(df):
     combinations = [
         (1, 1), (1, 0),
@@ -309,7 +308,6 @@ def main(args, keywords_pattern):
     keyword_counts = {k: v for k, v in keyword_counts.items() if v > 0}
     create_keyword_dot_plot(keyword_counts)
 
-
     msno.matrix(filtered_df)
     # Save the plot to a file
     plt.savefig('plots/missingno_plot.png')
@@ -326,7 +324,7 @@ if __name__ == "__main__":
                         default='../../data/processed/2022_aus_elections_mar_to_may.csv',
                         help='Path to the output file.')
     parser.add_argument('--use_cache', type=bool, default=True, 
-                        help='Whether to use the cached data.')
+                        help='Whether to use the cached data. It caches only the parsed version of the raw data.')
     args = parser.parse_args()
 
     keywords = set(keywords)

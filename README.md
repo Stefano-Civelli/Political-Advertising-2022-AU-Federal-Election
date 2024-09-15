@@ -37,6 +37,17 @@ To reproduce the analysis:
 1. Ensure all data files are correctly placed as described in the **Data** section
 2. Run the `dataset_creation.py` script to process the raw data
 3. Open and run the Jupyter notebooks in the `src/notebooks/` directory to reproduce specific parts of the analysis
+
+## NOTE
+
+If when trying to run some of the notebooks you encounter an error related to the nltk package, refer to the [NLTK documentation](https://www.nltk.org/data.html).
+
+In our specific case, the following lines helped us solve the issue we had with the package:
+
+```python
+import nltk
+nltk.download()
+```
    
 ## Contributing
 

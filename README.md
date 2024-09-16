@@ -4,7 +4,7 @@ This repository contains the code and analysis notebooks for the paper "Politica
 
 ## Data
 
-The data used in this analysis is not included in this repository due to size constraints. All data files can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.13661563). After downloading, place the files as follows:
+All data files can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.13661563). After downloading, place the files as follows:
 
 - Raw data file `2022_AU_election_raw.zip` should be placed in the `data/raw/` directory without unzipping
 - All other data files should be placed in the `data/external/` directory
@@ -14,7 +14,12 @@ The data used in this analysis is not included in this repository due to size co
 
 1. Clone this repository
 2. Download the data files from Zenodo and place them in the appropriate directories as described above
-3. Install the required dependencies (`pip install -r requirements.txt` from the folder containing the requirements.txt file)
+3. (Optional but recommended) Create a virtual environment to install the dependencies:
+   ```bash
+   conda create --name fbads python=3.10
+   conda activate fbads
+   ```
+4. Install the required dependencies (`pip install -r requirements.txt` from the folder containing the requirements.txt file)
 
 ## Data Processing
 
@@ -24,8 +29,8 @@ The `src/scripts/dataset_creation.py` script processes the raw data and produces
 
 The analysis is split into three Jupyter notebooks:
 
-1. `general_analysis.ipynb`: Produces general analysis results (Section 4 of the paper)
-2. `keyword_analysis.ipynb`: Analyzes keyword usage in the ads (Subsection 5.5 of the paper)
+1. `keyword_analysis.ipynb`: Was used to select the set of co-occurring keywords usage in the ads (Section 3.2 of the paper)
+2. `general_analysis.ipynb`: Contains a general analysis of the political ads (Section 4 of the paper)
 3. `party_analysis.ipynb`: Analyzes ad data by political party (Section 5 of the paper)
 
 These notebooks can be used to reproduce the results presented in the paper.

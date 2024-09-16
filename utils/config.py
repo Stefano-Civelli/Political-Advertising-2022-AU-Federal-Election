@@ -46,30 +46,30 @@ state_color = {
     'NT': '#e45d26',
 }
 
-color_list = [
-    'mediumslateblue',   
-    'cornflowerblue',    
-    'peachpuff', 
-    'firebrick',   
-    'darkorange',     
-    'paleturquoise',  
-    'mediumseagreen',     
-    'lightgrey',     
-    'slategray',    
-]
-
-
 # color_list = [
-# '#0099ff',
-#  '#0a2056',
-#    '#840f31',
-#  '#fbe500',
-#  '#d71f37',
-#    '#15684a',
-#    '#003399',
-#     '#e45d26',
-#     'black',
+#     'mediumslateblue',   
+#     'cornflowerblue',    
+#     'peachpuff', 
+#     'firebrick',   
+#     'darkorange',     
+#     'paleturquoise',  
+#     'mediumseagreen',     
+#     'lightgrey',     
+#     'slategray',    
 # ]
+
+
+color_list = [
+    '#0099ff',   
+    '#0a2056',    
+    '#d71f37', 
+    '#FFEC2C',   
+    '#0000E2',
+    '#7b68ee',
+    'grey',
+    '#D2D2D2',
+    '#8AD0FF',    
+]
 
 
 categorical_labels = ['page_name',

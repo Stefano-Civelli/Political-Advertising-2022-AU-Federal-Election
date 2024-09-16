@@ -170,3 +170,11 @@ data/external/*.py
 .idea/
 
 .vscode/
+
+
+# ignore australia map data files
+*.dbf
+*.prj
+*.shx
+*.shp
+*.xml

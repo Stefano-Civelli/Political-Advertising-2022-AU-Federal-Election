@@ -7,7 +7,7 @@ where the main goal was to provide an understanding of the political advertising
 Australian political parties on Facebook during the 2022 Australian Federal Election.
 
 2. Who created the dataset (e.g., which team, research group) and on behalf of which entity (e.g., company, institution, organization)?
-Dataset was created by the research paper authors: [anonymous for blind review], [anonymous for blind review], and [anonymous for blind review], on behalf of [anonymous for blind review].
+Dataset was created by the research paper authors: Stefano Civelli, Pietro Bernardelle, and Gianluca Demartini, on behalf of University_of_Queensland.
 
 3. Who funded the creation of the dataset?
 No funding was used for this project.

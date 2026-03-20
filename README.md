@@ -61,9 +61,3 @@ We welcome contributions to improve the analysis or extend it to other contexts.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Contact
-
-For any questions or feedback, please open an issue in this repository or contact us directly at the following email:
-- [anonymous for blind review]
-- [anonymous for blind review]

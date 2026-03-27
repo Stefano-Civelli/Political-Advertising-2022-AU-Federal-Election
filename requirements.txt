@@ -8,3 +8,4 @@ emoji
 geopandas
 watermark
 pymannkendall
+statsmodels
